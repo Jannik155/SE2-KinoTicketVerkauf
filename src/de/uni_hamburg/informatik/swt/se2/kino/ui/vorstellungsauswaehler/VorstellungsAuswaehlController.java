@@ -23,6 +23,9 @@ public class VorstellungsAuswaehlController extends BeobachtbaresSubmodul
 
     // Die Entität, die durch dieses UI-Modul verwaltet wird.
     private Tagesplan _tagesplan;
+    
+    // Flag to prevent infinite loops
+    private boolean _isUpdatingList = false;
 
     /**
      * Initialisiert das UI-Modul.
@@ -38,7 +41,11 @@ public class VorstellungsAuswaehlController extends BeobachtbaresSubmodul
      */
     private void vorstellungWurdeAusgewaehlt()
     {
-        informiereBeobachter();
+        // Only notify observers if we're not currently updating the list
+        if (!_isUpdatingList)
+        {
+            informiereBeobachter();
+        }
     }
 
     /**
@@ -89,6 +96,9 @@ public class VorstellungsAuswaehlController extends BeobachtbaresSubmodul
     private void aktualisiereAngezeigteVorstellungsliste(
             List<Vorstellung> vorstellungen)
     {
+        // Set flag to prevent notification during update
+        _isUpdatingList = true;
+        
         VorstellungsFormatierer[] varray = new VorstellungsFormatierer[vorstellungen
                 .size()];
         for (int i = 0; i < vorstellungen.size(); i++)
@@ -100,6 +110,12 @@ public class VorstellungsAuswaehlController extends BeobachtbaresSubmodul
         {
             _view.getVorstellungAuswahlList().setSelectedIndex(0);
         }
+        
+        // Reset flag after update
+        _isUpdatingList = false;
+        
+        // Now notify observers once after the update is complete
+        informiereBeobachter();
     }
 
     /**
