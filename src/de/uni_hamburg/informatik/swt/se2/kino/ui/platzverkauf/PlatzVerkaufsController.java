@@ -54,9 +54,19 @@ public class PlatzVerkaufsController
      */
     private void registriereUIAktionen()
     {
-        _view.getVerkaufenButton().addActionListener(e -> verkaufePlaetze(_vorstellung));
+        _view.getVerkaufenButton().addActionListener(e -> {
+            if (_vorstellung != null)
+            {
+                verkaufePlaetze(_vorstellung);
+            }
+        });
 
-        _view.getStornierenButton().addActionListener(e -> stornierePlaetze(_vorstellung));
+        _view.getStornierenButton().addActionListener(e -> {
+            if (_vorstellung != null)
+            {
+                stornierePlaetze(_vorstellung);
+            }
+        });
 
         _view.getPlatzplan().addPlatzSelectionListener(
                 event -> reagiereAufNeuePlatzAuswahl(event
@@ -81,8 +91,7 @@ public class PlatzVerkaufsController
      */
     private void aktualisierePreisanzeige(Set<Platz> plaetze)
     {
-
-        if (istVerkaufenMoeglich(plaetze))
+        if (_vorstellung != null && istVerkaufenMoeglich(plaetze))
         {
             int preis = _vorstellung.getPreisFuerPlaetze(plaetze);
             _view.getPreisLabel().setText("Gesamtpreis: " + preis + " Eurocent");
@@ -100,7 +109,7 @@ public class PlatzVerkaufsController
      */
     private boolean istStornierenMoeglich(Set<Platz> plaetze)
     {
-        return !plaetze.isEmpty() && _vorstellung.sindStornierbar(plaetze);
+        return _vorstellung != null && !plaetze.isEmpty() && _vorstellung.sindStornierbar(plaetze);
     }
 
     /**
@@ -110,7 +119,7 @@ public class PlatzVerkaufsController
      */
     private boolean istVerkaufenMoeglich(Set<Platz> plaetze)
     {
-        return !plaetze.isEmpty() && _vorstellung.sindVerkaufbar(plaetze);
+        return _vorstellung != null && !plaetze.isEmpty() && _vorstellung.sindVerkaufbar(plaetze);
     }
 
     /**
