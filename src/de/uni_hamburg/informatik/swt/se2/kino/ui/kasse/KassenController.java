@@ -3,6 +3,7 @@ package de.uni_hamburg.informatik.swt.se2.kino.ui.kasse;
 import de.uni_hamburg.informatik.swt.se2.kino.entitaeten.Kino;
 import de.uni_hamburg.informatik.swt.se2.kino.entitaeten.Tagesplan;
 import de.uni_hamburg.informatik.swt.se2.kino.entitaeten.Vorstellung;
+import de.uni_hamburg.informatik.swt.se2.kino.observer.SubmodulBeobachter;
 import de.uni_hamburg.informatik.swt.se2.kino.ui.datumsauswaehler.DatumAuswaehlController;
 import de.uni_hamburg.informatik.swt.se2.kino.ui.platzverkauf.PlatzVerkaufsController;
 import de.uni_hamburg.informatik.swt.se2.kino.ui.vorstellungsauswaehler.VorstellungsAuswaehlController;
@@ -16,7 +17,7 @@ import de.uni_hamburg.informatik.swt.se2.kino.wertobjekte.Datum;
  * @author SE2-Team
  * @version SoSe 2024
  */
-public class KassenController
+public class KassenController implements SubmodulBeobachter
 {
     // Die Entität, die durch dieses UI-Modul verwaltet wird.
     private Kino _kino;
@@ -53,10 +54,26 @@ public class KassenController
                 _vorstellungAuswaehlController.getUIPanel());
 
         registriereUIAktionen();
+        
+        // Als Beobachter bei den Submodulen registrieren
+        _datumAuswaehlController.fuegeBeobachterHinzu(this);
+        _vorstellungAuswaehlController.fuegeBeobachterHinzu(this);
+        
+        // Initiale Anzeige setzen
         setzeTagesplanFuerAusgewaehltesDatum();
         setzeAusgewaehlteVorstellung();
 
         _view.zeigeFenster();
+    }
+
+    /**
+     * Reagiert auf Änderungen in den beobachteten Submodulen.
+     */
+    @Override
+    public void reagiereAufAenderung()
+    {
+        setzeTagesplanFuerAusgewaehltesDatum();
+        setzeAusgewaehlteVorstellung();
     }
 
     /**
