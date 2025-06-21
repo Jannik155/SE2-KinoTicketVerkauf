@@ -55,14 +55,14 @@ public class KassenController implements Beobachter
 
         registriereUIAktionen();
         
-        // Als Beobachter bei den Submodulen registrieren
+        // Initiale Anzeige setzen BEVOR die Beobachter registriert werden
+        setzeTagesplanFuerAusgewaehltesDatum();
+        setzeAusgewaehlteVorstellung();
+        
+        // Als Beobachter bei den Submodulen registrieren - NACH der initialen Anzeige
         _datumAuswaehlController.registriereBeobachter(this);
         _vorstellungAuswaehlController.registriereBeobachter(this);
         _platzVerkaufsController.registriereBeobachter(this);
-        
-        // Initiale Anzeige setzen
-        setzeTagesplanFuerAusgewaehltesDatum();
-        setzeAusgewaehlteVorstellung();
 
         _view.zeigeFenster();
     }
