@@ -6,7 +6,7 @@ import javax.swing.event.ListSelectionListener;
 
 import de.uni_hamburg.informatik.swt.se2.kino.entitaeten.Tagesplan;
 import de.uni_hamburg.informatik.swt.se2.kino.entitaeten.Vorstellung;
-import de.uni_hamburg.informatik.swt.se2.kino.observer.BeobachtbaresSubmodul;
+import de.uni_hamburg.informatik.swt.se2.kino.observer.Beobachtbar;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ import java.util.List;
  * Dieses UI-Modul ist ein eingebettetes Submodul. Es benachrichtigt seine
  * Beobachter, wenn sich die ausgewählte Vorstellung geändert hat.
  */
-public class VorstellungsAuswaehlController extends BeobachtbaresSubmodul
+public class VorstellungsAuswaehlController extends Beobachtbar
 {
     private VorstellungsAuswaehlView _view;
 
@@ -44,7 +44,7 @@ public class VorstellungsAuswaehlController extends BeobachtbaresSubmodul
         // Only notify observers if we're not currently updating the list
         if (!_isUpdatingList)
         {
-            informiereBeobachter();
+            informiereAlleBeobachter();
         }
     }
 
@@ -115,7 +115,7 @@ public class VorstellungsAuswaehlController extends BeobachtbaresSubmodul
         _isUpdatingList = false;
         
         // Now notify observers once after the update is complete
-        informiereBeobachter();
+        informiereAlleBeobachter();
     }
 
     /**
