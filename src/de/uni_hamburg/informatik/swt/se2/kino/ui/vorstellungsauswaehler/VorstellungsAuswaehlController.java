@@ -114,8 +114,7 @@ public class VorstellungsAuswaehlController extends Beobachtbar
         // Reset flag after update
         _isUpdatingList = false;
         
-        // Now notify observers once after the update is complete
-        informiereAlleBeobachter();
+        // DON'T notify observers here - only notify when user selects a different show
     }
 
     /**
