@@ -1,7 +1,10 @@
 package de.uni_hamburg.informatik.swt.se2.kino.ui.datumsauswaehler;
 
+import java.util.HashSet;
+
 import javax.swing.JPanel;
 
+import de.uni_hamburg.informatik.swt.se2.kino.ui.beobachter.Beobachtbar;
 import de.uni_hamburg.informatik.swt.se2.kino.wertobjekte.Datum;
 
 /**
@@ -13,7 +16,7 @@ import de.uni_hamburg.informatik.swt.se2.kino.wertobjekte.Datum;
  * @author SE2-Team
  * @version SoSe 2024
  */
-public class DatumAuswaehlController
+public class DatumAuswaehlController extends Beobachtbar
 {
     private DatumAuswaehlView _view;
     private Datum _ausgewaehltesDatum;
@@ -25,6 +28,7 @@ public class DatumAuswaehlController
     public DatumAuswaehlController()
     {
         _ausgewaehltesDatum = Datum.heute();
+        _beobachter = new HashSet<>();
         _view = new DatumAuswaehlView(
                 _ausgewaehltesDatum.getFormatiertenString());
         registriereUIAktionen();
@@ -38,6 +42,7 @@ public class DatumAuswaehlController
         _ausgewaehltesDatum = _ausgewaehltesDatum.vorherigerTag();
         _view.getDatumLabel()
                 .setText(_ausgewaehltesDatum.getFormatiertenString());
+        meldeAenderung();
     }
 
     /**
@@ -48,6 +53,7 @@ public class DatumAuswaehlController
         _ausgewaehltesDatum = _ausgewaehltesDatum.naechsterTag();
         _view.getDatumLabel()
                 .setText(_ausgewaehltesDatum.getFormatiertenString());
+        meldeAenderung();
     }
 
     /**

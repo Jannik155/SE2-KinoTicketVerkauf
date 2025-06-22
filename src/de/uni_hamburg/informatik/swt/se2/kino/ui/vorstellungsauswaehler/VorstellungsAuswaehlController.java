@@ -6,7 +6,9 @@ import javax.swing.event.ListSelectionListener;
 
 import de.uni_hamburg.informatik.swt.se2.kino.entitaeten.Tagesplan;
 import de.uni_hamburg.informatik.swt.se2.kino.entitaeten.Vorstellung;
+import de.uni_hamburg.informatik.swt.se2.kino.ui.beobachter.Beobachtbar;
 
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -16,7 +18,7 @@ import java.util.List;
  * Dieses UI-Modul ist ein eingebettetes Submodul. Es benachrichtigt seine
  * Beobachter, wenn sich die ausgewählte Vorstellung geändert hat.
  */
-public class VorstellungsAuswaehlController
+public class VorstellungsAuswaehlController extends Beobachtbar
 {
     private VorstellungsAuswaehlView _view;
 
@@ -29,6 +31,7 @@ public class VorstellungsAuswaehlController
     public VorstellungsAuswaehlController()
     {
         _view = new VorstellungsAuswaehlView();
+        _beobachter = new HashSet<>();
         registriereUIAktionen();
     }
 
@@ -37,7 +40,7 @@ public class VorstellungsAuswaehlController
      */
     private void vorstellungWurdeAusgewaehlt()
     {
-
+    	meldeAenderung();
     }
 
     /**
