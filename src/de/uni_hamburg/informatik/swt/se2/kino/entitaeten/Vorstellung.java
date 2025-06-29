@@ -340,6 +340,8 @@ public class Vorstellung
         return result;
     }
 
+    //TODO Geldbetrag benutzt 2
+    
     @Override
     public String toString()
     {

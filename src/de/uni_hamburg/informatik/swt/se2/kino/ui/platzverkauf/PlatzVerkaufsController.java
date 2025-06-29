@@ -155,6 +155,7 @@ public class PlatzVerkaufsController
     private void verkaufePlaetze(Vorstellung vorstellung)
     {
         Set<Platz> plaetze = _view.getPlatzplan().getAusgewaehltePlaetze();
+      //TODO Geldbetrag wird benutzt 1
         vorstellung.verkaufePlaetze(plaetze);
         aktualisierePlatzplan();
     }
@@ -168,4 +169,6 @@ public class PlatzVerkaufsController
         vorstellung.stornierePlaetze(plaetze);
         aktualisierePlatzplan();
     }
+    
+    //TODO Methode die Geldbetrag benutzt 3
 }

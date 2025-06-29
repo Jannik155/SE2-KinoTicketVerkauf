@@ -18,7 +18,7 @@ import de.uni_hamburg.informatik.swt.se2.kino.wertobjekte.Datum;
  * @author SE2-Team
  * @version SoSe 2024
  */
-public class KassenController implements Beobachter
+public class KassenController 
 {
     // Die Entität, die durch dieses UI-Modul verwaltet wird.
     private Kino _kino;
@@ -49,9 +49,19 @@ public class KassenController implements Beobachter
         _datumAuswaehlController = new DatumAuswaehlController();
         _vorstellungAuswaehlController = new VorstellungsAuswaehlController();
         
+        //Beobachter::setzeTagesplanFuerAusgewaehltesDatum()
+        
         //Beobachter registrieren
-        _datumAuswaehlController.registriereBeobachter(this);
-        _vorstellungAuswaehlController.registriereBeobachter(this);
+        _datumAuswaehlController.registriereBeobachter(new Beobachter() {
+
+			@Override
+			public void reagiereAufAenderung(Beobachtbar quelle) {
+				setzeTagesplanFuerAusgewaehltesDatum();
+				
+			}
+        	
+        });
+        _vorstellungAuswaehlController.registriereBeobachter(quelle -> setzeAusgewaehlteVorstellung());
 
         // View erstellen (mit eingebetteten Views der direkten Submodule)
         _view = new KassenView(_platzVerkaufsController.getUIPanel(),
@@ -116,7 +126,7 @@ public class KassenController implements Beobachter
         return _vorstellungAuswaehlController.getAusgewaehlteVorstellung();
     }
     
-    @Override
+    /*@Override
     public void reagiereAufAenderung(Beobachtbar quelle)
     {
 	    if (quelle == _datumAuswaehlController)
@@ -128,4 +138,5 @@ public class KassenController implements Beobachter
 	    	setzeAusgewaehlteVorstellung();
 	    }    
     }
+    */
 }

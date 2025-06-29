@@ -13,18 +13,22 @@ public abstract class Beobachtbar
 	/**
 	 * Fügt beobachter dem Set hinzu
 	 * @param beobachter Beobachter der hinzugefügt werden soll
+	 * @require beobachter != null
 	 */
 	public void registriereBeobachter(Beobachter beobachter)
 	{
+		assert beobachter != null : "Vorbedingung verletzt: beobachter != null";
 		_beobachter.add(beobachter);
 	}
 	
 	/**
 	 * Entfernt Beobachter aus dem Set
 	 * @param beobachter Beobachter der entfernt werden soll
+	 * @require beobachter != null
 	 */
 	public void entferneBeobachter(Beobachter beobachter)
 	{
+		assert beobachter != null : "Vorbedingung verletzt: beobachter != null";
 		_beobachter.remove(beobachter);
 	}
 	
